@@ -8,11 +8,16 @@ import Loader from "../Loader";
 import { fetcher } from "@/api/swrFetcher";
 
 const JobList = () => {
-  const [searchText, setSearchText] = useState<string>(
-    sessionStorage.getItem("searchText") || ""
-  );
+  const [searchText, setSearchText] = useState<string>("");
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+
+  useEffect(() => {
+    const storedSearchText = sessionStorage.getItem("searchText");
+    if (storedSearchText) {
+      setSearchText(storedSearchText);
+    }
+  }, []);
 
   useEffect(() => {
     const userProfile = localStorage.getItem("profileData");

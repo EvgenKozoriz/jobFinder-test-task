@@ -16,9 +16,14 @@ const ClientProfile = () => {
     about: "",
   });
 
-  const [isProfileDataExist, setIsProfileDataExist] = useState<boolean>(
-    !!localStorage.getItem("profileData")
-  );
+  const [isProfileDataExist, setIsProfileDataExist] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isDataExist = localStorage.getItem("profileData");
+    if (isDataExist) {
+      setIsProfileDataExist(!!isDataExist);
+    }
+  }, []);
 
   useEffect(() => {
     const storedProfileData = localStorage.getItem("profileData");
@@ -43,7 +48,6 @@ const ClientProfile = () => {
     const { name, value } = e.target;
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
-
 
   const handleSubmit = (values: IProfileData) => {
     localStorage.setItem("profileData", JSON.stringify(values));
